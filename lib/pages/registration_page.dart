@@ -39,19 +39,21 @@ class _RegistrationPageState extends State<RegistrationPage>{
 
             ),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 150,),
+              padding: EdgeInsets.symmetric(vertical: 100,),
               margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
 
 
               child: Column(
+
                 children: [
+                  Image.asset("assets/icons/FindMaster_icon.png", height: 250, width: 250,),
                   Form(
 
                     key: _formKey,
                     child: Column(
                       children: [
 
-                        SizedBox(height: 30,),
+
                         Container(
                           child: TextFormField(
                             decoration: ThemeHelper().textInputDecoration('First Name', 'Enter your first name'),
