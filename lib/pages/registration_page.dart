@@ -39,7 +39,7 @@ class _RegistrationPageState extends State<RegistrationPage>{
 
             ),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 100,),
+
               margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
 
 

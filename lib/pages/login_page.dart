@@ -19,20 +19,33 @@ class _LoginPageState extends State<LoginPage>{
 
   @override
   Widget build(BuildContext context) {
+    var screen = MediaQuery.of(context);
+    var distanceBetween = 0.0;
+    switch (screen.orientation){
+      case Orientation.portrait:{
+          distanceBetween = screen.size.height/4;
+      }
+      break;
 
+      case Orientation.landscape:{
+        distanceBetween = screen.size.height/20;
+      }
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              height: _headerHeight,
+            height:  distanceBetween,
+
               //let's create a common header widget
             ),
             SafeArea(
               child: Container(
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  margin: EdgeInsets.fromLTRB(20, 10, 20, 10),// This will be the login form
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+
+                 // This will be the login form
                   child: Column(
                     children: [
                       Text(
