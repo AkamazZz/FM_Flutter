@@ -1,3 +1,4 @@
+import 'package:find_master/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import "package:find_master/pages/registration_page.dart";
 import 'package:hexcolor/hexcolor.dart';
@@ -7,7 +8,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  Color _primaryColor = HexColor('#DC54FE');
+  Color _primaryColor = HexColor('#5325E8');
   Color _accentColor = HexColor('#8A02AE');
 
    MyApp({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.grey.shade100,
         primarySwatch: Colors.grey,
       ),
-      home: RegistrationPage(),
+      home: LoginPage(),
     );
   }
 }

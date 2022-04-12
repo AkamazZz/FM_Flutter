@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:find_master/common/theme_helper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,24 +16,37 @@ class RegistrationPage extends  StatefulWidget{
 class _RegistrationPageState extends State<RegistrationPage>{
 
   final _formKey = GlobalKey<FormState>();
-  bool checkedValue = false;
-  bool checkboxValue = false;
 
+  bool termsCheckedValue = false;
+  bool termsCheckboxValue = false;
+
+  bool employerCheckedValue = false;
+  bool employerCheckboxValue = false;
+  double heightOfScreen = 0.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
 
+      body: SingleChildScrollView(
+
+
+        child: Stack(
+
+          children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+
+            ),
             Container(
-              margin: EdgeInsets.fromLTRB(25, 50, 25, 10),
-              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(vertical: 150,),
+              margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
+
+
               child: Column(
                 children: [
                   Form(
+
                     key: _formKey,
                     child: Column(
                       children: [
@@ -106,10 +120,10 @@ class _RegistrationPageState extends State<RegistrationPage>{
                                 Row(
                                   children: <Widget>[
                                     Checkbox(
-                                        value: checkboxValue,
+                                        value: termsCheckboxValue,
                                         onChanged: (value) {
                                           setState(() {
-                                            checkboxValue = value!;
+                                            termsCheckboxValue = value!;
                                             state.didChange(value);
                                           });
                                         }),
@@ -128,14 +142,45 @@ class _RegistrationPageState extends State<RegistrationPage>{
                             );
                           },
                           validator: (value) {
-                            if (!checkboxValue) {
+                            if (!termsCheckboxValue) {
                               return 'You need to accept terms and conditions';
                             } else {
                               return null;
                             }
                           },
                         ),
-                        SizedBox(height: 20.0),
+                        SizedBox(height: 0.0),
+                        FormField(
+                          builder: (state) {
+                            return Column(
+                              children: <Widget>[
+                                Row(
+                                  children: <Widget>[
+                                    Checkbox(
+                                        value: employerCheckboxValue,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            employerCheckboxValue = value!;
+                                            state.didChange(value);
+                                          });
+                                        }),
+                                    Text("I'm employer", style: TextStyle(color: Colors.grey),),
+                                  ],
+                                ),
+                                Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    state.errorText ?? '',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(color: Theme.of(context).errorColor,fontSize: 12,),
+                                  ),
+                                )
+                              ],
+                            );
+                          },
+
+                        ),
+                        SizedBox(height: 10.0),
                         Container(
                           decoration: ThemeHelper().buttonBoxDecoration(context),
                           child: ElevatedButton(
@@ -163,6 +208,25 @@ class _RegistrationPageState extends State<RegistrationPage>{
                             },
                           ),
                         ),
+                        Container(
+                          margin: EdgeInsets.fromLTRB(10,20,10,20),
+                          //child: Text('Don\'t have an account? Create'),
+                          child: Text.rich(
+                              TextSpan(
+                                  children: [
+
+                                    TextSpan(
+                                      text: 'Have account?',
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = (){
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                                        },
+                                      style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).accentColor),
+                                    ),
+                                  ]
+                              )
+                          ),
+                        ),
 
                       ],
                     ),
@@ -172,7 +236,8 @@ class _RegistrationPageState extends State<RegistrationPage>{
             ),
           ],
         ),
-      ),
+        ),
+
     );
   }
 
