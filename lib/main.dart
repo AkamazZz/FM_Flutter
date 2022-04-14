@@ -1,7 +1,13 @@
 import 'package:find_master/pages/login_page.dart';
+import 'package:find_master/pages/profile_page.dart';
+import 'package:find_master/pages/widgets/bottom_navbar/navigation_bar.dart';
+import 'package:find_master/pages/widgets/bottom_navbar/navigation_cubit.dart';
 import 'package:flutter/material.dart';
 import "package:find_master/pages/registration_page.dart";
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+
+import 'constants/navbar_items.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,7 +23,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    /*return MaterialApp(
       title: 'Flutter Login UI',
       theme: ThemeData(
         primaryColor: _primaryColor,
@@ -25,8 +31,42 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.grey.shade100,
         primarySwatch: Colors.grey,
       ),
+
+
       home: LoginPage(),
+    );*/
+    return BlocProvider<NavigationCubit>(
+        create: (context) => NavigationCubit(),
+        child: MaterialApp(
+            theme: ThemeData(
+              primaryColor: _primaryColor,
+              accentColor: _accentColor,
+              scaffoldBackgroundColor: Colors.grey.shade100,
+              primarySwatch: Colors.indigo,
+            ),
+        home: Scaffold(
+
+        bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(
+            builder: (context, state) {
+        return buildBottomBar(context,state.navbarItem) ;
+        }
+    ),
+    body: BlocBuilder<NavigationCubit, NavigationState>(
+      builder: (context, state){
+        if (state.navbarItem == NavbarItem.home) {
+          return ProfilePage();
+        } else if (state.navbarItem == NavbarItem.vacancies) {
+          return LoginPage();
+        } else if (state.navbarItem == NavbarItem.profile) {
+          return LoginPage();
+        }
+        return Container();
+      }
+    )
+    )
+    )
     );
+
   }
 }
 

@@ -86,7 +86,8 @@ class _LoginPageState extends State<LoginPage>{
                                     child: Text('Sign In'.toUpperCase(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
                                   ),
                                   onPressed: (){
-                                    //After successful login we will redirect to profile page. Let's create profile page now
+                                    //After successful login we will
+                                    // redirect to profile page. Let's create profile page now
                                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfilePage()));
                                   },
                                 ),
