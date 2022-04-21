@@ -62,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage>{
                     child: Icon(Icons.person, size: 80, color: Colors.grey.shade300, ),
                   ),
                   SizedBox(height: 20,),
-                  Text('Nigger', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+                  Text('No', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
 
 
                   SizedBox(height: 10,),
@@ -103,7 +103,7 @@ class _ProfilePageState extends State<ProfilePage>{
                                         ListTile(
                                           leading: Icon(Icons.email),
                                           title: Text("Email"),
-                                          subtitle: Text("niger@gmail.com"),
+                                          subtitle: Text("Yes@gmail.com"),
                                         ),
                                         ListTile(
                                           leading: Icon(Icons.calendar_view_day),

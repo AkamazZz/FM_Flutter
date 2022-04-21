@@ -1,6 +1,6 @@
 import 'package:find_master/pages/login_page.dart';
 import 'package:find_master/pages/profile_page.dart';
-import 'package:find_master/pages/vacancies_page.dart';
+import 'package:find_master/pages/main_page.dart';
 import 'package:find_master/pages/widgets/bottom_navbar/navigation_bar.dart';
 import 'package:find_master/pages/widgets/bottom_navbar/navigation_cubit.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.indigo,
             ),
         home: Scaffold(
+          
 
         bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(
             builder: (context, state) {
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
     body: BlocBuilder<NavigationCubit, NavigationState>(
       builder: (context, state){
         if (state.navbarItem == NavbarItem.home) {
-          return VacanciesPage();
+          return MainPage();
         } else if (state.navbarItem == NavbarItem.vacancies) {
           return LoginPage();
         } else if (state.navbarItem == NavbarItem.profile) {
