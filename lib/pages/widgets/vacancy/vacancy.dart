@@ -106,7 +106,8 @@ class _VacancyWidgetState extends State<VacancyWidget> {
 
             Expanded(
                 child: Container(
-                    padding: const EdgeInsets.all(30),
+
+                    padding: const EdgeInsets.only(right: 30),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,

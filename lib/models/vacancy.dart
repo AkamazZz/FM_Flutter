@@ -11,10 +11,10 @@ class Vacancy {
   final String vacancy_description;
   final DateTime vacancy_date_posted;
 
-  Vacancy(this.user_id, this.vacancy_name, this.vacancy_employer_name,
-      this.vacancy_address, this.vacancy_requirments, this.vacancy_exp,
-      this.vacancy_employment_type, this.vacancy_description,
-      this.vacancy_date_posted, this.vacancy_salary);
+  Vacancy({required this.user_id, required this.vacancy_name, required this.vacancy_employer_name,
+      required this.vacancy_address, required this.vacancy_requirments, required this.vacancy_exp,
+      required this.vacancy_employment_type, required this.vacancy_description,
+      required this.vacancy_date_posted, required this.vacancy_salary});
 
   Vacancy.fromJson(Map<String, dynamic> json)
       : user_id = json['user_id'],

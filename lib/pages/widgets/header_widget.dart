@@ -29,6 +29,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
 
     return Container(
       child: Stack(
+
         children: [
           ClipPath(
             child: Container(
