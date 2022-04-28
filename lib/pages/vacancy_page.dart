@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 class VacancyPage extends StatefulWidget {
   final Vacancy vacancy;
   bool isFavorite;
+  bool isEmployer = false;
   VacancyPage({Key? key, required this.vacancy, required this.isFavorite}) : super(key: key);
 
 
