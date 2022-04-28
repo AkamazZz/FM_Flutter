@@ -1,6 +1,7 @@
 
 
 import 'package:find_master/models/vacancy.dart';
+import 'package:find_master/pages/vacancy_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,13 +10,11 @@ import '../../../common/theme_helper.dart';
 
 
 class VacancyWidget extends StatefulWidget{
-   final String _vacancy_name;
-   final int _salary;
-   final String _where_from;
-   final String _employment_type;
+   final Vacancy vacancy;
+
    bool _is_favourite;
 
-   VacancyWidget( this._vacancy_name, this._salary, this._where_from, this._employment_type, this._is_favourite,
+   VacancyWidget(this.vacancy, this._is_favourite,
    {Key? key}
    ) : super(key: key);
    @override
@@ -36,7 +35,8 @@ class _VacancyWidgetState extends State<VacancyWidget> {
       padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
       child:
       GestureDetector(
-        onTap: (){ },
+        onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => VacancyPage(vacancy: widget.vacancy,
+            isFavorite: widget._is_favourite ))); },
         child:
       Container(
 
@@ -79,22 +79,22 @@ class _VacancyWidgetState extends State<VacancyWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget._vacancy_name,
+                Text(widget.vacancy.vacancy_name,
                     style: GoogleFonts.oswald(fontSize: 23, textStyle: Theme
                         .of(context)
                         .textTheme
                         .headline6)),
-                Text(' ' + widget._salary.toString() + " KZT",
+                Text(' ' + widget.vacancy.vacancy_salary.toString() + " KZT",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
                     )),
-                Text(' ' + widget._where_from.toString(),
+                Text(' ' + widget.vacancy.vacancy_address,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
                     )),
-                Text(' ' + widget._employment_type.toString(),
+                Text(' ' + widget.vacancy.vacancy_employment_type,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
