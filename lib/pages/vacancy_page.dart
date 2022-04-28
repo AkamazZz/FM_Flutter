@@ -21,7 +21,9 @@ class _VacancyPageState extends State<VacancyPage>{
   Widget build(BuildContext context) {
     return  Scaffold(appBar: AppBar(
       backgroundColor: Colors.grey.shade50,
+
       iconTheme: IconThemeData(
+
         color: Colors.black54,
       ) ,
       actions: [IconButton(

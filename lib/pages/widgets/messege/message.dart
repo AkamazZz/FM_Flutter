@@ -15,9 +15,10 @@ class Message extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isMe) {
       return Padding(
-        padding: const EdgeInsets.all(1.0),
+        padding: const EdgeInsets.all(10.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
+
           children: <Widget>[
             Flexible(
               child: Container(
@@ -38,6 +39,7 @@ class Message extends StatelessWidget {
                   padding: const EdgeInsets.all(13.0),
                   child: Text(
                     message,
+                    textAlign: TextAlign.end,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 17
@@ -51,12 +53,12 @@ class Message extends StatelessWidget {
       );
     } else {
       return Padding(
-        padding: EdgeInsets.all(1.0),
+        padding: EdgeInsets.all(10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
 
-            
+
             Flexible(
               child: Container(
                 constraints: BoxConstraints(

@@ -65,7 +65,7 @@ class VacanciesPage extends StatelessWidget {
 
 
             if (index == 0) {
-               return Message(message: 'BRUDFFUSFDODSDDFDSJFD DFAADFfdffdfdfdfddfdfdf', isMe: false);
+               return Message(message: 'BRUDFFUSFDODSDDFDSJFD DFAADFfdffdfdfdfddfdfdf', isMe: true);
             }else {
               return VacancyWidget(
                 Vacancy(vacancy_exp: '0', vacancy_date_posted: DateTime(2021),
