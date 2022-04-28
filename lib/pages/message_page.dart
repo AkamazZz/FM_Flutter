@@ -80,7 +80,7 @@ class _MessagePageState extends State<MessagePage> {
                     ),
                   ),
                   SizedBox(width: 15,),
-                  Icon(Icons.thumb_up,size: 35,color: HexColor('#5325E8'),),
+                  Icon(Icons.send,size: 35,color: HexColor('#5325E8'),),
                 ],
               ),
             ),
@@ -98,7 +98,7 @@ class _MessagePageState extends State<MessagePage> {
     return ListView(
       padding: EdgeInsets.only(right: 20,left: 20,top: 20,bottom: 80),
       children: List.generate(1, (index){
-        return Message(isMe: false,message: "DFGFJOGFDGNDFJGDFNGFDJGNFDGKJDFNGDFJKGD DFNG GJNGDFKJGNDFGDFNGDFGJDFN");
+        return Message(isMe: true,message: "DFGFJOGFDGNDFJGDFNGFDJGNFDGKJDFNGDFJKGD DFNG GJNGDFKJGNDFGDFNGDFGJDFN");
       }),
     );
   }
