@@ -1,4 +1,5 @@
 import 'package:find_master/models/vacancy.dart';
+import 'package:find_master/pages/add_vacancy.dart';
 import 'package:find_master/pages/login_page.dart';
 import 'package:find_master/pages/message_page.dart';
 import 'package:find_master/pages/profile_page.dart';
@@ -64,7 +65,7 @@ class MyApp extends StatelessWidget {
         if (state.navbarItem == NavbarItem.home) {
           return MainPage();
         } else if (state.navbarItem == NavbarItem.vacancies) {
-          return VacanciesPage();
+          return AddPageVacancy();
         } else if (state.navbarItem == NavbarItem.profile) {
           return MessagePage();
         }

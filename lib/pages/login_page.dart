@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage>{
                                   style: ThemeHelper().buttonStyle(),
                                   child: Padding(
                                     padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
-                                    child: Text('Sign In'.toUpperCase(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
+                                    child: Text('Apply'.toUpperCase(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
                                   ),
                                   onPressed: (){
                                     //After successful login we will

@@ -66,7 +66,9 @@ class Message extends StatelessWidget {
                   maxWidth: MediaQuery.of(context).size.width/1.25,
                 ),
                 decoration: BoxDecoration(
-                  color: HexColor('#9d8bd9'),
+                  color: Colors.grey.shade200
+                  ,
+    border: Border.all(color: Colors.grey.shade300),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(5),
                       bottomLeft: Radius.circular(5),
