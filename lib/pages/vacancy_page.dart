@@ -49,6 +49,7 @@ class _VacancyPageState extends State<VacancyPage>{
 
     ),
       body: SingleChildScrollView(
+
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +67,7 @@ class _VacancyPageState extends State<VacancyPage>{
                       widget.vacancy.vacancy_address.isEmpty
                           ? 'No info about address'
                           : widget.vacancy.vacancy_address,
-                      style: GoogleFonts.openSans(fontSize: 13, color: Colors.black54, textStyle: Theme
+                      style: GoogleFonts.openSans(fontSize: 15, color: Colors.black54, textStyle: Theme
                           .of(context)
                           .textTheme
                           .headline6)),
@@ -77,7 +78,7 @@ class _VacancyPageState extends State<VacancyPage>{
                         widget.vacancy.vacancy_name.isEmpty
                             ? 'Not provided vacancy name'
                             : widget.vacancy.vacancy_name,
-                        style: GoogleFonts.openSans(fontSize: 18,  textStyle: Theme
+                        style: GoogleFonts.openSans(fontSize: 20,  textStyle: Theme
                             .of(context)
                             .textTheme
                             .headline6)
@@ -86,7 +87,7 @@ class _VacancyPageState extends State<VacancyPage>{
                   ),
                   Text(
                       widget.vacancy.vacancy_salary.toString() + ' KZT',
-                      style: GoogleFonts.openSans(fontSize: 18,  textStyle: Theme
+                      style: GoogleFonts.openSans(fontSize: 20,  textStyle: Theme
                           .of(context)
                           .textTheme
                           .headline6)
@@ -98,7 +99,7 @@ class _VacancyPageState extends State<VacancyPage>{
                         widget.vacancy.vacancy_exp.isEmpty
                             ?  'Experience: 0 years'
                             :  'Experience: ' + widget.vacancy.vacancy_exp + ' Years',
-                        style: GoogleFonts.openSans(fontSize: 13, color: Colors.black54,  textStyle: Theme
+                        style: GoogleFonts.openSans(fontSize: 15, color: Colors.black54,  textStyle: Theme
                             .of(context)
                             .textTheme
                             .headline6)
@@ -108,7 +109,7 @@ class _VacancyPageState extends State<VacancyPage>{
                       widget.vacancy.vacancy_employment_type.isEmpty
                           ? 'unknown employment '
                           : widget.vacancy.vacancy_employment_type + ' employment',
-                      style: GoogleFonts.openSans(fontSize: 13, color: Colors.black54,  textStyle: Theme
+                      style: GoogleFonts.openSans(fontSize: 15, color: Colors.black54,  textStyle: Theme
                           .of(context)
                           .textTheme
                           .headline6)

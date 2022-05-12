@@ -1,12 +1,17 @@
+import 'package:dio/dio.dart';
+import 'package:find_master/repository/auth_repository.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:find_master/common/theme_helper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:http/http.dart' as http;
+
 
 import 'login_page.dart';
 
 class RegistrationPage extends  StatefulWidget{
+  AuthRepository auth = AuthRepository();
   @override
   State<StatefulWidget> createState() {
     return _RegistrationPageState();
@@ -23,6 +28,15 @@ class _RegistrationPageState extends State<RegistrationPage>{
   bool employerCheckedValue = false;
   bool employerCheckboxValue = false;
   double heightOfScreen = 0.0;
+
+  var userController = TextEditingController();
+  var nameController = TextEditingController();
+  var surnameController = TextEditingController();
+  var passwordController = TextEditingController();
+  var checkPasswordController = TextEditingController();
+  var codeController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +70,7 @@ class _RegistrationPageState extends State<RegistrationPage>{
 
                         Container(
                           child: TextFormField(
+                            controller: nameController,
                             decoration: ThemeHelper().textInputDecoration('First Name', 'Enter your first name'),
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
@@ -63,6 +78,7 @@ class _RegistrationPageState extends State<RegistrationPage>{
                         SizedBox(height: 30,),
                         Container(
                           child: TextFormField(
+                            controller: surnameController,
                             decoration: ThemeHelper().textInputDecoration('Last Name', 'Enter your last name'),
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
@@ -70,7 +86,20 @@ class _RegistrationPageState extends State<RegistrationPage>{
                         SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
-                            decoration: ThemeHelper().textInputDecoration("E-mail address", "Enter your email"),
+                            controller: userController,
+                            decoration: InputDecoration(
+                            labelText: "Email address",
+                            hintText: 'Enter your Email',
+                            suffixIcon: IconButton(onPressed: () => widget.auth.SendVerification(userController.text),
+                                icon: Icon(Icons.send)),
+                            fillColor: Colors.white,
+                            filled: true,
+                            contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: BorderSide(color: Colors.grey)),
+                            enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: BorderSide(color: Colors.grey.shade400)),
+                            errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: BorderSide(color: Colors.red, width: 2.0)),
+                            focusedErrorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100.0), borderSide: BorderSide(color: Colors.red, width: 2.0)),
+                          ),
                             keyboardType: TextInputType.emailAddress,
                             validator: (val) {
                               if(!(val!.isEmpty) && !RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$").hasMatch(val)){
@@ -84,10 +113,15 @@ class _RegistrationPageState extends State<RegistrationPage>{
                         SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
+                            controller: passwordController,
+
                             decoration: ThemeHelper().textInputDecoration(
                                 "Password*",
                                 "Enter your password"),
+
+
                             keyboardType: TextInputType.visiblePassword,
+
                             validator: (val) {
                               if(!(val!.isEmpty) && !RegExp(r"^{7}$").hasMatch(val)){
                                 return "Length is too short";
@@ -101,16 +135,13 @@ class _RegistrationPageState extends State<RegistrationPage>{
                         SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
+                            controller: codeController,
                             obscureText: true,
+                            keyboardType: TextInputType.number,
+                            maxLength: 4,
                             decoration: ThemeHelper().textInputDecoration(
                                 "Code*", "Enter your password"),
-                            validator: (val) {
-    if(!(val!.isEmpty)) {
-    return "Enter code from you email";
-    }
-    return null;
 
-                            },
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
@@ -143,13 +174,7 @@ class _RegistrationPageState extends State<RegistrationPage>{
                               ],
                             );
                           },
-                          validator: (value) {
-                            if (!termsCheckboxValue) {
-                              return 'You need to accept terms and conditions';
-                            } else {
-                              return null;
-                            }
-                          },
+
                         ),
                         SizedBox(height: 0.0),
                         FormField(
@@ -198,14 +223,16 @@ class _RegistrationPageState extends State<RegistrationPage>{
                                 ),
                               ),
                             ),
+
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginPage()
-                                    ),
-                                        (Route<dynamic> route) => false
-                                );
+
+                               Response resp =  widget.auth.Register(userController.text, passwordController.text, nameController.text,
+                                    surnameController.text, employerCheckboxValue) as Response;
+                               if(resp.statusCode == 200){
+                                 Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                               }
+
                               }
                             },
                           ),

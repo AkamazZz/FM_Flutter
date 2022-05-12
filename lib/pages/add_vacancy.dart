@@ -30,14 +30,19 @@ class _AddPageVacancyState extends State<AddPageVacancy> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
+
           children: [
 
             SafeArea(
+
               child: Container(
+
                   margin: EdgeInsets.symmetric(horizontal: 10),
 
                   // This will be the login form
                   child: Column(
+
+
                     children: [
 
                       SizedBox(height: 10.0),
@@ -119,8 +124,11 @@ class _AddPageVacancyState extends State<AddPageVacancy> {
                               ),
 
 
-
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10),
+                                child:
                               Container(
+
                                 decoration: ThemeHelper().buttonBoxDecoration(context),
                                 child: ElevatedButton(
                                   style: ThemeHelper().buttonStyle(),
@@ -135,7 +143,7 @@ class _AddPageVacancyState extends State<AddPageVacancy> {
                                   },
                                 ),
                               ),
-
+                              ),
                             ],
                           )
                       ),

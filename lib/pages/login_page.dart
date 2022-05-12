@@ -1,14 +1,21 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
+import 'package:find_master/pages/main_page.dart';
+import 'package:find_master/repository/auth_repository.dart';
+import 'package:find_master/shared_preferences/jwt_token.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:find_master/common/theme_helper.dart';
+import 'package:http/http.dart' as http;
 
 
 import 'registration_page.dart';
 
 class LoginPage extends StatefulWidget{
-  const LoginPage({Key? key}): super(key:key);
-
+  LoginPage({Key? key}): super(key:key);
+  var auth = AuthRepository();
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -16,6 +23,8 @@ class LoginPage extends StatefulWidget{
 class _LoginPageState extends State<LoginPage>{
   double _headerHeight = 250;
   Key _formKey = GlobalKey<FormState>();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +72,7 @@ class _LoginPageState extends State<LoginPage>{
                             children: [
                               Container(
                                 child: TextField(
+                                  controller: emailController,
                                   decoration: ThemeHelper().textInputDecoration('User Name', 'Enter your user name'),
                                 ),
                                 decoration: ThemeHelper().inputBoxDecorationShaddow(),
@@ -70,6 +80,7 @@ class _LoginPageState extends State<LoginPage>{
                               SizedBox(height: 30.0),
                               Container(
                                 child: TextField(
+                                  controller: passwordController,
                                   obscureText: true,
                                   decoration: ThemeHelper().textInputDecoration('Password', 'Enter your password'),
                                 ),
@@ -83,9 +94,21 @@ class _LoginPageState extends State<LoginPage>{
                                   style: ThemeHelper().buttonStyle(),
                                   child: Padding(
                                     padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
-                                    child: Text('Apply'.toUpperCase(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
+                                    child: Text('Login'.toUpperCase(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
                                   ),
-                                  onPressed: (){
+                                  onPressed: () async{
+                                    widget.auth.Login(emailController.text, passwordController.text).then((res){
+                                      if (res.statusCode == 200){
+
+
+                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage()));
+                                      }
+                                    });
+
+
+
+
+
                                     //After successful login we will
                                     // redirect to profile page. Let's create profile page now
                                    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfilePage()));

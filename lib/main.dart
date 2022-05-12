@@ -12,10 +12,13 @@ import 'package:flutter/material.dart';
 import "package:find_master/pages/registration_page.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:find_master/shared_preferences/jwt_token.dart';
 
 import 'constants/navbar_items.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await jwtToken.init();
   runApp(MyApp());
 }
 
@@ -29,7 +32,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    /*return MaterialApp(
+    return MaterialApp(
       title: 'Flutter Login UI',
       theme: ThemeData(
         primaryColor: _primaryColor,
@@ -40,8 +43,8 @@ class MyApp extends StatelessWidget {
 
 
       home: LoginPage(),
-    );*/
-    return BlocProvider<NavigationCubit>(
+    );
+    /*return BlocProvider<NavigationCubit>(
         create: (context) => NavigationCubit(),
         child: MaterialApp(
             theme: ThemeData(
@@ -63,7 +66,7 @@ class MyApp extends StatelessWidget {
     body: BlocBuilder<NavigationCubit, NavigationState>(
       builder: (context, state){
         if (state.navbarItem == NavbarItem.home) {
-          return MainPage();
+          return RegistrationPage();
         } else if (state.navbarItem == NavbarItem.vacancies) {
           return AddPageVacancy();
         } else if (state.navbarItem == NavbarItem.profile) {
@@ -74,7 +77,7 @@ class MyApp extends StatelessWidget {
     )
     )
     )
-    );
+    );*/
 
   }
 }
