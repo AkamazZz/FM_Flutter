@@ -99,6 +99,10 @@ class _LoginPageState extends State<LoginPage>{
                                   onPressed: () async{
                                     widget.auth.Login(emailController.text, passwordController.text).then((res){
                                       if (res.statusCode == 200){
+                                        widget.auth.GetId(jwtToken.getString()!).then((value) =>
+                                        jwtToken.setInt(value)
+                                        );
+
 
 
                                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage()));

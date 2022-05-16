@@ -17,15 +17,22 @@ class AuthRepository{
   ));
   var url = "${ApiConstants.mainUrl}auth/";
 
-  Future<http.Response> Register(String email, String password, String name, String surname, bool isEmployer) async{
-    print('Im gay');
-     return await http.post(Uri.parse(url + 'register?UserEmail=${email}&UserPassword=${password}&UserName=${name}&UserSurname=${surname}&UserType=${isEmployer}'));
+  Future<Response> Register(String email, String password, String name, String surname, bool isEmployer) async{
+
+    print(url + 'register?UserEmail=${email}&UserPassword=${password}&UserName=${name}&UserSurname=${surname}&UserType=${isEmployer.toString()}');
+
+    final res = await _dio.post(url + 'register?UserEmail=${email}&UserPassword=${password}&UserName=${name}&UserSurname=${surname}&UserType=${isEmployer.toString()}');
+    if(res.statusCode == 200){
+      return res;
+    }else{
+      throw Exception('Already exists');
+    }
   }
   Future<Response> Login (String email, String password) async{
 
     final res = await _dio.post(url + 'Login?UserEmail=${email}&UserPassword=${password}');
     if (res.statusCode == 200){
-      //jwtToken.setString(jsonDecode(res.data));
+      jwtToken.setString(res.data.toString());
       print(res.data);
       return res;
     }else{
@@ -37,5 +44,13 @@ class AuthRepository{
   }
   Future<http.Response> CompareVerification(String code) async{
     return await http.post(Uri.parse(url + 'CompareVerification'));
+  }
+  Future<int> GetId(String token) async{
+    final res = await _dio.get(url + 'GetId?JWT=$token');
+    if(res.statusCode == 200){
+      return int.parse(res.data.toString());
+    }else{
+      throw Exception('Wrong format');
+    }
   }
 }

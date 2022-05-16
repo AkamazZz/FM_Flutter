@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:find_master/pages/profile_page.dart';
 import 'package:find_master/repository/auth_repository.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -224,16 +225,26 @@ class _RegistrationPageState extends State<RegistrationPage>{
                               ),
                             ),
 
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
+                            onPressed: () async {
 
-                               Response resp =  widget.auth.Register(userController.text, passwordController.text, nameController.text,
-                                    surnameController.text, employerCheckboxValue) as Response;
-                               if(resp.statusCode == 200){
-                                 Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
-                               }
 
-                              }
+                               widget.auth.Register(userController.text, passwordController.text, nameController.text, surnameController.text, employerCheckboxValue).then((res) {
+                                 if (res.statusCode == 200) {
+                                   AlertDialog(
+                                       title: const Text('You have registered')
+                                   );
+                                   Navigator.pushReplacement(context,
+                                       MaterialPageRoute(builder: (context) =>
+                                           ProfilePage()));
+                                 }else{
+                                   AlertDialog(
+                                       title: const Text('Something went wrong')
+                                   );
+                                 }
+                               });
+
+
+
                             },
                           ),
                         ),

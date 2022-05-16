@@ -12,7 +12,12 @@ class jwtToken{
    static Future<bool> setString(String value) async =>
        await _jwt_pref.setString('jwt', value);
 
+   static Future<bool> setInt(int value) async =>
+      await _jwt_pref.setInt('id', value );
+
    static String? getString() =>
        _jwt_pref.getString('jwt');
+   static int? getInt() =>
+       _jwt_pref.getInt('id');
 
 }
