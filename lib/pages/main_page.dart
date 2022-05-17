@@ -33,7 +33,7 @@ class _MainPageState extends State<MainPage> {
 
                 return const Center(child: Text('An error occurred'),);
               }else if (snapshot.hasData){
-                return VacancyList(vacancies: snapshot.data!);
+                return VacancyList(vacancies: snapshot.data!, isMainPage: true);
               }else{
                 return const Center(
                   child:  CircularProgressIndicator(),
