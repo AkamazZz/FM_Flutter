@@ -8,12 +8,12 @@ import 'package:google_fonts/google_fonts.dart';
 import '../common/theme_helper.dart';
 
 class VacanciesPage extends StatelessWidget {
-  VacanciesPage({Key? key}) : super(key: key);
+  final bool isEmployer;
+  VacanciesPage({Key? key, required this.isEmployer}) : super(key: key);
   var _vacancies = <Vacancy>[];
-  var _title = 'Favorites';
   @override
   Widget build(BuildContext context) {
-
+    var _title = isEmployer == true ? 'Applications' : 'Favorites' ;
     return
 
       Scaffold(appBar: AppBar(
@@ -68,7 +68,7 @@ class VacanciesPage extends StatelessWidget {
               return VacancyWidget(
                 Vacancy(vacancy_exp: '0',
                     vacancy_salary: 300, vacancy_requirments: '0', vacancy_description: "Labore sunt veniam amet est. Minim nisi dolor eu ad incididunt cillum elit ex ut. Dolore exercitation nulla tempor consequat aliquip occaecat. Nisi id ipsum irure aute. Deserunt sit aute irure quis nulla eu consequat fugiat Lorem sunt magna et consequat labore. Laboris incididunt id Lorem est duis deserunt nisi dolore eiusmod culpa exercitation consectetur. Fugiat do aliqua laboris cillum sint dolor officia adipisicing excepteur fugiat officia. Cupidatat ut elit consequat ea laborum occaecat laborum aute consectetur Lorem exercitation. Lorem anim minim officia aliquip commodo deserunt mollit. Duis deserunt quis cillum voluptate duis ipsum quis incididunt elit excepteur excepteur labore duis cillum. Voluptate sint nulla minim eiusmod in nulla. Ea id ad duis esse adipisicing culpa ex esse ea dolore consequat. Reprehenderit eu minim veniam aliquip do ipsum duis do qui adipisicing aliquip ad occaecat.",
-                    user_id: 1, vacancy_name: 'C# developer', vacancy_employment_type: 'Part-time',
+                    Vacancy_id: 1, vacancy_name: 'C# developer', vacancy_employment_type: 'Part-time',
                     vacancy_employer_name: 'Slave', vacancy_address: 'Astana'
                 ), true);
 

@@ -228,7 +228,7 @@ class _RegistrationPageState extends State<RegistrationPage>{
                             onPressed: () async {
 
 
-                               widget.auth.Register(userController.text, passwordController.text, nameController.text, surnameController.text, employerCheckboxValue).then((res) {
+                               widget.auth.Register(userController.text.toLowerCase(), passwordController.text, nameController.text, surnameController.text, employerCheckboxValue).then((res) {
                                  if (res.statusCode == 200) {
                                    AlertDialog(
                                        title: const Text('You have registered')

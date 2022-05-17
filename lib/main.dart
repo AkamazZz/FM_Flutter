@@ -1,4 +1,5 @@
 import 'package:find_master/models/vacancy.dart';
+import 'package:find_master/pages/PageWithNavigation.dart';
 import 'package:find_master/pages/add_vacancy.dart';
 import 'package:find_master/pages/login_page.dart';
 import 'package:find_master/pages/message_page.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    if(jwtToken.getString()!.isEmpty){
+    if(jwtToken.getString()! == 'empty' ){
     return MaterialApp(
     title: 'Flutter Login UI',
     theme: ThemeData(
@@ -46,42 +47,8 @@ class MyApp extends StatelessWidget {
     home: LoginPage(),
     );
     } else {
-      return BlocProvider<NavigationCubit>(
-          create: (context) => NavigationCubit(),
-          child: MaterialApp(
-              theme: ThemeData(
-                primaryColor: _primaryColor,
-                secondaryHeaderColor: Colors.white,
-                scaffoldBackgroundColor: Colors.white,
-                primarySwatch: Colors.indigo,
+      return NavigationPage();
 
-              ),
-              title: "bruh",
-              home: Scaffold(
-
-
-                  bottomNavigationBar: BlocBuilder<
-                      NavigationCubit,
-                      NavigationState>(
-                      builder: (context, state) {
-                        return buildBottomBar(context, state.navbarItem);
-                      }
-                  ),
-                  body: BlocBuilder<NavigationCubit, NavigationState>(
-                      builder: (context, state) {
-                        if (state.navbarItem == NavbarItem.home) {
-                          return MainPage();
-                        } else if (state.navbarItem == NavbarItem.vacancies) {
-                          return VacanciesPage();
-                        } else if (state.navbarItem == NavbarItem.profile) {
-                          return ProfilePage();
-                        }
-                        return Container();
-                      }
-                  )
-              )
-          )
-      );
     }
 
   }

@@ -3,18 +3,14 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:find_master/pages/main_page.dart';
 import 'package:find_master/repository/api_constants.dart';
+import 'package:find_master/repository/dioConfiguration.dart';
 import 'package:find_master/shared_preferences/jwt_token.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 
 class AuthRepository{
-  final Dio _dio = Dio(BaseOptions(
-
-    responseType: ResponseType.plain,
-    connectTimeout: 10000,
-    receiveTimeout: 10000,
-  ));
+  final Dio _dio = Dio(dioConfiguration.conf);
   var url = "${ApiConstants.mainUrl}auth/";
 
   Future<Response> Register(String email, String password, String name, String surname, bool isEmployer) async{

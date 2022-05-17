@@ -18,8 +18,9 @@ class jwtToken{
       await _jwt_pref.setBool('isEmployer', value);
    static bool? getBool() =>
       _jwt_pref.getBool('isEmployer');
+
    static String? getString() =>
-       _jwt_pref.getString('jwt');
+       _jwt_pref.getString('jwt') ?? 'empty';
    static int? getInt() =>
        _jwt_pref.getInt('id');
    static void clear() =>

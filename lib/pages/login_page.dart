@@ -12,6 +12,7 @@ import 'package:find_master/common/theme_helper.dart';
 import 'package:http/http.dart' as http;
 
 
+import 'PageWithNavigation.dart';
 import 'registration_page.dart';
 
 class LoginPage extends StatefulWidget{
@@ -99,7 +100,7 @@ class _LoginPageState extends State<LoginPage>{
                                     child: Text('Login'.toUpperCase(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
                                   ),
                                   onPressed: () async{
-                                    widget.auth.Login(emailController.text, passwordController.text).then((res){
+                                    widget.auth.Login(emailController.text.toLowerCase(), passwordController.text).then((res){
                                       if (res.statusCode == 200){
                                         widget.auth.GetId(jwtToken.getString()!).then((value) {
                                           jwtToken.setInt(value);
@@ -111,7 +112,7 @@ class _LoginPageState extends State<LoginPage>{
 
 
 
-                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage()));
+                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NavigationPage()));
                                       }
                                     });
 

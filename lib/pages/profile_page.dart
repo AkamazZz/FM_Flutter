@@ -1,7 +1,11 @@
 import 'package:find_master/pages/widgets/header_widget.dart';
+import 'package:find_master/shared_preferences/jwt_token.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import '../common/theme_helper.dart';
+import 'login_page.dart';
 
 class ProfilePage extends StatefulWidget{
 
@@ -123,7 +127,26 @@ class _ProfilePageState extends State<ProfilePage>{
                               ],
                             ),
                           ),
-                        )
+                        ),
+                        Container(
+                            margin:const  EdgeInsets.symmetric(vertical: 10),
+                          decoration: ThemeHelper().buttonBoxDecoration(context),
+                          child: ElevatedButton(
+                            style: ThemeHelper().buttonStyle(),
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
+                              child: Text('Log out'.toUpperCase(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
+                            ),
+                            onPressed: () async{
+                              jwtToken.clear();
+
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+
+
+
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   )
