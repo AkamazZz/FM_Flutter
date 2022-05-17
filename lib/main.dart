@@ -32,52 +32,57 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    if(jwtToken.getString()!.isEmpty){
     return MaterialApp(
-      title: 'Flutter Login UI',
-      theme: ThemeData(
-        primaryColor: _primaryColor,
-        accentColor: _accentColor,
-        scaffoldBackgroundColor: Colors.grey.shade100,
-        primarySwatch: Colors.grey,
-      ),
-
-
-      home: LoginPage(),
-    );
-    /*return BlocProvider<NavigationCubit>(
-        create: (context) => NavigationCubit(),
-        child: MaterialApp(
-            theme: ThemeData(
-              primaryColor: _primaryColor,
-              secondaryHeaderColor: Colors.white,
-              scaffoldBackgroundColor: Colors.white,
-              primarySwatch: Colors.indigo,
-
-            ),
-          title: "bruh",
-        home: Scaffold(
-
-
-        bottomNavigationBar: BlocBuilder<NavigationCubit, NavigationState>(
-            builder: (context, state) {
-        return buildBottomBar(context,state.navbarItem) ;
-        }
+    title: 'Flutter Login UI',
+    theme: ThemeData(
+    primaryColor: _primaryColor,
+    accentColor: _accentColor,
+    scaffoldBackgroundColor: Colors.grey.shade100,
+    primarySwatch: Colors.grey,
     ),
-    body: BlocBuilder<NavigationCubit, NavigationState>(
-      builder: (context, state){
-        if (state.navbarItem == NavbarItem.home) {
-          return RegistrationPage();
-        } else if (state.navbarItem == NavbarItem.vacancies) {
-          return AddPageVacancy();
-        } else if (state.navbarItem == NavbarItem.profile) {
-          return MessagePage();
-        }
-        return Container();
-      }
-    )
-    )
-    )
-    );*/
+
+
+    home: LoginPage(),
+    );
+    } else {
+      return BlocProvider<NavigationCubit>(
+          create: (context) => NavigationCubit(),
+          child: MaterialApp(
+              theme: ThemeData(
+                primaryColor: _primaryColor,
+                secondaryHeaderColor: Colors.white,
+                scaffoldBackgroundColor: Colors.white,
+                primarySwatch: Colors.indigo,
+
+              ),
+              title: "bruh",
+              home: Scaffold(
+
+
+                  bottomNavigationBar: BlocBuilder<
+                      NavigationCubit,
+                      NavigationState>(
+                      builder: (context, state) {
+                        return buildBottomBar(context, state.navbarItem);
+                      }
+                  ),
+                  body: BlocBuilder<NavigationCubit, NavigationState>(
+                      builder: (context, state) {
+                        if (state.navbarItem == NavbarItem.home) {
+                          return MainPage();
+                        } else if (state.navbarItem == NavbarItem.vacancies) {
+                          return VacanciesPage();
+                        } else if (state.navbarItem == NavbarItem.profile) {
+                          return ProfilePage();
+                        }
+                        return Container();
+                      }
+                  )
+              )
+          )
+      );
+    }
 
   }
 }

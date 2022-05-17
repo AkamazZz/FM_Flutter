@@ -17,16 +17,16 @@ class Vacancy extends Equatable {
       required this.vacancy_address, required this.vacancy_requirments, required this.vacancy_exp,
       required this.vacancy_employment_type, required this.vacancy_description, required this.vacancy_salary});
 
-  Vacancy.fromJson(Map<String, dynamic> json)
+   Vacancy.fromJson(Map<String, dynamic> json)
       : user_id = json['user_id'],
         vacancy_name = json['vacancy_name'],
         vacancy_salary = json['vacancy_salary'],
-        vacancy_employer_name = json['vacancy_employer_name'],
-        vacancy_address = json['vacancy_address'],
-        vacancy_requirments = json['vacancy_requirments'],
-        vacancy_exp = json["vacancy_experience"],
+        vacancy_employer_name = json['vacancy_employer_name'] ,
+        vacancy_address = json['vacancy_address'] ?? 'Not found',
+        vacancy_requirments = json['vacancy_requirments'] ?? 'Not specified',
+        vacancy_exp = json["vacancy_experience"] ?? 0,
         vacancy_employment_type = json['vacancy_employment_type'],
-        vacancy_description = json['vacancy_description'];
+        vacancy_description = json['vacancy_description'] ?? 'Description is emptyb';
 
 
   @override

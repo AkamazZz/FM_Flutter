@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:find_master/pages/main_page.dart';
 import 'package:find_master/repository/auth_repository.dart';
+import 'package:find_master/repository/profile_repository.dart';
 import 'package:find_master/shared_preferences/jwt_token.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -16,6 +17,7 @@ import 'registration_page.dart';
 class LoginPage extends StatefulWidget{
   LoginPage({Key? key}): super(key:key);
   var auth = AuthRepository();
+  var profile = ProfileRepository();
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -99,8 +101,12 @@ class _LoginPageState extends State<LoginPage>{
                                   onPressed: () async{
                                     widget.auth.Login(emailController.text, passwordController.text).then((res){
                                       if (res.statusCode == 200){
-                                        widget.auth.GetId(jwtToken.getString()!).then((value) =>
-                                        jwtToken.setInt(value)
+                                        widget.auth.GetId(jwtToken.getString()!).then((value) {
+                                          jwtToken.setInt(value);
+
+                                          widget.profile.isEmployer(jwtToken.getInt()!).then((value) =>
+                                          jwtToken.setBool(value));
+                                        }
                                         );
 
 
