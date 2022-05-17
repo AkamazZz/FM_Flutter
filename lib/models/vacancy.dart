@@ -1,7 +1,7 @@
 import "dart:core";
 
 import 'package:equatable/equatable.dart';
-class Vacancy extends Equatable {
+class Vacancy {
   final int Vacancy_id;
   final String vacancy_name;
   final int vacancy_salary;
@@ -17,8 +17,19 @@ class Vacancy extends Equatable {
       required this.vacancy_address, required this.vacancy_requirments, required this.vacancy_exp,
       required this.vacancy_employment_type, required this.vacancy_description, required this.vacancy_salary});
 
-   Vacancy.fromJson(Map<String, dynamic> json)
-      : Vacancy_id = json['VacancyId'],
+  factory Vacancy.fromJson(Map<String, dynamic> json){
+    return Vacancy(Vacancy_id: json['vacancyId'] ?? 0,
+    vacancy_name: json['vacancyName'] ?? 'not found',
+    vacancy_salary: json['vacancySalary'] ?? 'Not specified',
+    vacancy_employer_name: json['vacancyEmployerName'] ?? 'Not found',
+    vacancy_address: json['vacancyAddress'] ?? 'Not found',
+    vacancy_requirments:  json['vacancyRequirements'] ?? 'Not specified',
+    vacancy_exp: json['vacancyExp'] ?? 'Not specified',
+      vacancy_employment_type: json['vacancyEmploymentType'] ?? 'Not specified',
+      vacancy_description:  json['vacancyDescription'] ?? 'Not written'
+    );
+  }
+    /*  Vacancy_id = json['VacancyId'],
         vacancy_name = json['vacancyName'],
         vacancy_salary = json['vacancySalary'],
         vacancy_employer_name = json['vacancyEmployerName'] ,
@@ -27,12 +38,7 @@ class Vacancy extends Equatable {
         vacancy_exp = json["vacancyExp"] ?? 0,
         vacancy_employment_type = json['vacancyEmploymentType'],
         vacancy_description = json['vacancyDescription'] ?? 'Description is emptyb';
-
-
-  @override
-  // TODO: implement props
-  List<Object?> get props => [Vacancy_id, vacancy_name,vacancy_salary,vacancy_employer_name,vacancy_address,vacancy_requirments,
-  vacancy_exp, vacancy_employment_type, vacancy_description];
+*/
 
 
 

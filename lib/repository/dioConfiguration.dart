@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 class dioConfiguration{
-  static BaseOptions conf =  BaseOptions( responseType: ResponseType.plain,
-  connectTimeout: 10000,
-  receiveTimeout: 10000);
+  static BaseOptions conf =  BaseOptions(contentType: Headers.jsonContentType,
+  connectTimeout: 100000,
+  receiveTimeout: 100000);
 }
