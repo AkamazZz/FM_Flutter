@@ -62,6 +62,11 @@ class VacancyRepository{
     return res;
   }
 
+  Future<Response> deleteFavorite(int userId, int vacancyId) async {
+    Response res = await _dio.post(url + 'Delete_Favourite?UserId=$userId&VacancyId=$vacancyId');
+    return res;
+  }
+
   Future<Response> AddVacancy(String name, int salary, String employerName,
       String address, String requirments, String experience, String employmentType,
         String description) async {

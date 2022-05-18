@@ -34,7 +34,13 @@ class _starWidgetState extends State<starWidget> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [IconButton(onPressed:
                       () {
-
+                      if(!widget.isFavorite) {
+                        widget.vacancyRep.addFavorite(
+                            jwtToken.getInt()!, widget.vacancyId);
+                      }else{
+                        widget.vacancyRep.deleteFavorite(
+                            jwtToken.getInt()!, widget.vacancyId);
+                      }
                     setState(() {
                       widget.isFavorite == true
                           ? widget.isFavorite = false

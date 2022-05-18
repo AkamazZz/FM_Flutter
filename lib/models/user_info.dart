@@ -2,9 +2,10 @@ import 'package:equatable/equatable.dart';
 
 class UserInfo extends Equatable{
 
-  final int userId;
+
   final String userName;
   final String userSurname;
+
   /*String? userNumber;
   String? userAddress;
   String? userBirthDay;
@@ -12,15 +13,14 @@ class UserInfo extends Equatable{
   String? skills;
   String? workExp;*/
 
-  const UserInfo(this.userId, this.userName, this.userSurname);
+  const UserInfo( this.userName, this.userSurname);
 
-  UserInfo.fromJson(Map<String, dynamic> json)
-      : userId = json['UserId'],
-        userName = json['UserName'],
-        userSurname = json['UserSurname'];
+   factory UserInfo.fromJson(Map<String, dynamic> json) {
+     return UserInfo(json['userName'], json['userSurname']);
+   }
 
   @override
   // TODO: implement props
-  List<Object?> get props => [userId, userName, userSurname];
+  List<Object?> get props => [ userName, userSurname];
 
 }

@@ -43,6 +43,7 @@ class VacancyList extends StatefulWidget {
   }
    @override
   ListView build(BuildContext context) {
+     var searchController = TextEditingController();
        widget.minusVacancy = widget.isMainPage == true ? widget.minusVacancy : 0 ;
     return  ListView.builder(
       padding: EdgeInsets.symmetric(vertical: 15),
@@ -78,6 +79,24 @@ class VacancyList extends StatefulWidget {
           return Container(padding: EdgeInsets.symmetric(vertical: 0),
 
             child: TextField(
+              onSubmitted: (value) async {
+                widget.vacancies.clear();
+                widget.isFavorite.clear();
+                widget.vacancyRep.searchVacancies(searchController.text).then((value) {
+               setState(() {
+
+              widget.vacancies.addAll(value);
+               });
+               widget.vacancies.forEach((element) {
+                  widget.vacancyRep.isFavorite(jwtToken.getInt()!, element.Vacancy_id).then((value){
+                    setState(() {
+                      widget.isFavorite.add(value);
+
+                  });});
+                });
+                });
+              },
+              controller: searchController,
               obscureText: false,
               decoration: ThemeHelper().textInputDecoration('Search', 'What do you want to search'),
             ),
@@ -98,7 +117,7 @@ class VacancyList extends StatefulWidget {
     }
         } ,
 
-      itemCount: widget.isFavorite.length + widget.minusVacancy  ,
+      itemCount: widget.isFavorite.length + widget.minusVacancy ,
     );
   }
 }
