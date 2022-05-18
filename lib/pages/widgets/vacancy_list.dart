@@ -1,37 +1,68 @@
 
 
+import 'dart:async';
+
 import 'package:find_master/models/vacancy.dart';
 import 'package:find_master/pages/widgets/vacancy/vacancy.dart';
+import 'package:find_master/repository/vacancy_repository.dart';
 import 'package:find_master/shared_preferences/jwt_token.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/theme_helper.dart';
 
-class VacancyList extends StatelessWidget {
-   VacancyList({Key? key, required this.vacancies, required this.isMainPage}) : super(key: key);
-   final bool isMainPage;
+class VacancyList extends StatefulWidget {
+  VacancyList({Key? key, required this.vacancies, required this.isMainPage})
+      : super(key: key);
+  final bool isMainPage;
   final List<Vacancy> vacancies;
+  VacancyRepository vacancyRep = VacancyRepository();
+  int minusVacancy = jwtToken.getBool() == true ? 2 : 1;
 
-   int minusVacancy = jwtToken.getBool() == true ? 2 : 1 ;
+  final isFavorite = <bool>[].toList();
 
+  _VacancyState createState() => _VacancyState();
+
+}
+ class _VacancyState extends State<VacancyList> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    for(var i = 0 ; i < widget.vacancies.length; i++) {
+      widget.vacancyRep.isFavorite(
+          jwtToken.getInt()!, widget.vacancies[i].Vacancy_id).then((
+          value){
+            setState(() {
+              widget.isFavorite.add(value);
+
+            });
+    }
+        //    print(isFavorite.toString());
+      );
+    }
+  }
+   @override
   ListView build(BuildContext context) {
-    minusVacancy = isMainPage == true ? minusVacancy : 0 ;
+       widget.minusVacancy = widget.isMainPage == true ? widget.minusVacancy : 0 ;
     return  ListView.builder(
       padding: EdgeInsets.symmetric(vertical: 15),
       scrollDirection: Axis.vertical,
 
       itemBuilder: (context, index) {
-        if(isMainPage){
-        if(index == 0 ){
-          return Container(padding: EdgeInsets.symmetric(vertical: 0),
 
-            child: TextField(
-              obscureText: false,
-              decoration: ThemeHelper().textInputDecoration('Search', 'What do you want to search'),
-            ),
-            decoration: ThemeHelper().inputBoxDecorationShaddow(),
-          );
+        if(widget.isMainPage ){
+        if(index > 0 && !jwtToken.getBool()! ){
+          print(widget.minusVacancy);
+          print(widget.isFavorite.length);
+          return VacancyWidget(
+
+              Vacancy(vacancy_exp: widget.vacancies[index-widget.minusVacancy].vacancy_exp,
+                  vacancy_salary: widget.vacancies[index-widget.minusVacancy].vacancy_salary, vacancy_requirments: widget.vacancies[index-widget.minusVacancy].vacancy_requirments,
+                  vacancy_description: widget.vacancies[index-widget.minusVacancy].vacancy_requirments,
+                  Vacancy_id: widget.vacancies[index-widget.minusVacancy].Vacancy_id, vacancy_name: widget.vacancies[index-widget.minusVacancy].vacancy_name, vacancy_employment_type: widget.vacancies[index-widget.minusVacancy].vacancy_employment_type,
+                  vacancy_employer_name: widget.vacancies[index-widget.minusVacancy].vacancy_employer_name, vacancy_address: widget.vacancies[index-widget.minusVacancy].vacancy_address
+              ), widget.isFavorite[index-widget.minusVacancy]);
+
         }else if (index == 1 && jwtToken.getBool()!){
           return Container(padding: EdgeInsets.symmetric(vertical: 0),
 
@@ -43,26 +74,31 @@ class VacancyList extends StatelessWidget {
           );
         }
         else {
-          return VacancyWidget(
 
-              Vacancy(vacancy_exp: vacancies[index-minusVacancy].vacancy_exp,
-                  vacancy_salary: vacancies[index-minusVacancy].vacancy_salary, vacancy_requirments: vacancies[index-minusVacancy].vacancy_requirments, vacancy_description: vacancies[index-minusVacancy].vacancy_requirments,
-                  Vacancy_id: vacancies[index-minusVacancy].Vacancy_id, vacancy_name: vacancies[index-minusVacancy].vacancy_name, vacancy_employment_type: vacancies[index-minusVacancy].vacancy_employment_type,
-                  vacancy_employer_name: vacancies[index-minusVacancy].vacancy_employer_name, vacancy_address: vacancies[index-minusVacancy].vacancy_address
-              ), jwtToken.getBool()!);
+          return Container(padding: EdgeInsets.symmetric(vertical: 0),
+
+            child: TextField(
+              obscureText: false,
+              decoration: ThemeHelper().textInputDecoration('Search', 'What do you want to search'),
+            ),
+            decoration: ThemeHelper().inputBoxDecorationShaddow(),
+          );
+
+
         }
      } else {
-    return VacancyWidget(
+          return VacancyWidget(
 
-    Vacancy(vacancy_exp: vacancies[index-minusVacancy].vacancy_exp,
-    vacancy_salary: vacancies[index-minusVacancy].vacancy_salary, vacancy_requirments: vacancies[index-minusVacancy].vacancy_requirments, vacancy_description: vacancies[index-minusVacancy].vacancy_requirments,
-    Vacancy_id: vacancies[index-minusVacancy].Vacancy_id, vacancy_name: vacancies[index-minusVacancy].vacancy_name, vacancy_employment_type: vacancies[index-minusVacancy].vacancy_employment_type,
-    vacancy_employer_name: vacancies[index-minusVacancy].vacancy_employer_name, vacancy_address: vacancies[index-minusVacancy].vacancy_address
-    ), jwtToken.getBool()!);
+              Vacancy(vacancy_exp: widget.vacancies[index-widget.minusVacancy].vacancy_exp,
+                  vacancy_salary: widget.vacancies[index-widget.minusVacancy].vacancy_salary, vacancy_requirments: widget.vacancies[index-widget.minusVacancy].vacancy_requirments,
+                  vacancy_description: widget.vacancies[index-widget.minusVacancy].vacancy_requirments,
+                  Vacancy_id: widget.vacancies[index-widget.minusVacancy].Vacancy_id, vacancy_name: widget.vacancies[index-widget.minusVacancy].vacancy_name, vacancy_employment_type: widget.vacancies[index-widget.minusVacancy].vacancy_employment_type,
+                  vacancy_employer_name: widget.vacancies[index-widget.minusVacancy].vacancy_employer_name, vacancy_address: widget.vacancies[index-widget.minusVacancy].vacancy_address
+              ), widget.isFavorite[index-widget.minusVacancy]);
     }
         } ,
 
-      itemCount: vacancies.length +  minusVacancy  ,
+      itemCount: widget.isFavorite.length + widget.minusVacancy  ,
     );
   }
 }

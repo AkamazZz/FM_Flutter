@@ -35,6 +35,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     if(jwtToken.getString()! == 'empty' ){
     return MaterialApp(
+      debugShowMaterialGrid: false,
+    debugShowCheckedModeBanner: false,
     title: 'Flutter Login UI',
     theme: ThemeData(
     primaryColor: _primaryColor,

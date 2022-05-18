@@ -67,6 +67,7 @@ class VacanciesPage extends StatelessWidget {
 
             return const Center(child: Text('An error occurred'),);
           }else if (snapshot.hasData){
+            
             return VacancyList(vacancies: snapshot.data!, isMainPage: false);
           }else{
             return const Center(

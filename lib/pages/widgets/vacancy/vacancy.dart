@@ -2,6 +2,8 @@
 
 import 'package:find_master/models/vacancy.dart';
 import 'package:find_master/pages/vacancy_page.dart';
+import 'package:find_master/pages/widgets/vacancy/star.dart';
+import 'package:find_master/shared_preferences/jwt_token.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -103,45 +105,7 @@ class _VacancyWidgetState extends State<VacancyWidget> {
               ],
 
             ),
-
-            Expanded(
-                child: Container(
-
-                    padding: const EdgeInsets.only(right: 30),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [IconButton(onPressed:
-                            () {
-                          setState(() {
-                            widget._is_favourite == true
-                                ? widget._is_favourite = false
-                                : widget._is_favourite = true;
-                          });
-
-                        }, icon: Icon(
-                          Icons.star,
-                          size: MediaQuery
-                              .of(context)
-                              .orientation == Orientation.portrait
-                              ? MediaQuery
-                              .of(context)
-                              .size
-                              .height / 15
-                              : MediaQuery
-                              .of(context)
-                              .size
-                              .height / 7,
-                          color:
-                          widget._is_favourite == true
-                              ? Colors.amberAccent
-                              : Colors.grey,
-
-                        ))
-
-
-                        ]
-                    ))),
+            starWidget(widget.vacancy.Vacancy_id, jwtToken.getBool()!, widget._is_favourite ),
 
           ],
         ),

@@ -22,6 +22,8 @@ class _NavigationPageState extends State<NavigationPage> {
     return BlocProvider<NavigationCubit>(
         create: (context) => NavigationCubit(),
         child: MaterialApp(
+            debugShowMaterialGrid: false,
+            debugShowCheckedModeBanner: false,
             theme: ThemeData(
               primaryColor: HexColor('#5325E8'),
               secondaryHeaderColor: Colors.white,
