@@ -43,10 +43,8 @@ class AuthRepository{
   }
   Future<int> GetId(String token) async{
     final res = await _dio.get(url + 'GetId?JWT=$token');
-    if(res.statusCode == 200){
+
       return int.parse(res.data.toString());
-    }else{
-      throw Exception('Wrong format');
-    }
+
   }
 }

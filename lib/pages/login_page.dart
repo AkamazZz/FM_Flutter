@@ -103,17 +103,20 @@ class _LoginPageState extends State<LoginPage>{
                                     widget.auth.Login(emailController.text.toLowerCase(), passwordController.text).then((res){
                                       if (res.statusCode != 400){
                                         widget.auth.GetId(jwtToken.getString()!).then((value) {
+                                          print(value);
+                                          print('IDIDIDI');
                                           jwtToken.setInt(value);
 
                                           widget.profile.isEmployer(jwtToken.getInt()!).then((value) =>
                                           jwtToken.setBool(value));
+                                          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => NavigationPage()),
+                                              ModalRoute.withName('/'));
                                         }
                                         );
 
 
 
-                                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => NavigationPage()),
-                                        ModalRoute.withName('/'));
+
                                       }
                                     });
 

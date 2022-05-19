@@ -164,7 +164,7 @@ class _AddPageVacancyState extends State<AddPageVacancy> {
                                   onPressed: () async {
                                     widget.vacancyRep.AddVacancy(positionController.text, int.parse(salaryController.text), companyNameController.text, cityController.text,
                                         requirmentsController.text, experienceController.text, employmentTypeController.text, descriptionController.text).then((value) {
-                                          if(value.statusCode != 400){
+                                          if(value.statusCode != 400 || value.statusCode != 500){
                                             Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => NavigationPage()),
                                                 ModalRoute.withName('/'));
                                           }

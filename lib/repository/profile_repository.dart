@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:find_master/repository/dioConfiguration.dart';
 import 'package:find_master/shared_preferences/jwt_token.dart';
@@ -18,15 +20,19 @@ class ProfileRepository{
       throw Exception('Wrong format');
     }
   }
-  Future<List<UserInfo>> getProfile() async{
-    final res = await _dio.get(url + jwtToken.getInt()!.toString());
+  Future<UserInfo> getProfile() async{
+    Response res = await _dio.get(url + jwtToken.getInt()!.toString());
+ //   print(url + jwtToken.getInt()!.toString());
+    print(res.data.toString());
     return parseUser(res);
   }
 
 
-  List<UserInfo> parseUser(Response response) {
+  UserInfo parseUser(Response response) {
 
-
-    return (response.data as List).map<UserInfo>((json) => UserInfo.fromJson(json)).toList();
+    var user = UserInfo.fromJson(response.data);
+    return user;
   }
+
+
 }

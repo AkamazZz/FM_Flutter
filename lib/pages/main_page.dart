@@ -24,7 +24,6 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    widget.vacancyRep.fetchVacancies();
   }
   @override
   Widget build(BuildContext context) {

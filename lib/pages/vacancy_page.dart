@@ -3,10 +3,15 @@
 
 import 'package:find_master/models/vacancy.dart';
 import 'package:find_master/pages/widgets/bottom_button.dart';
+import 'package:find_master/pages/widgets/vacancy/employer.dart';
+import 'package:find_master/repository/message_repository.dart';
 import 'package:find_master/repository/vacancy_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:find_master/shared_preferences/jwt_token.dart';
+
+import '../models/user_dto.dart';
+import '../models/user_info.dart';
 
 class VacancyPage extends StatefulWidget {
   final Vacancy vacancy;
@@ -15,6 +20,8 @@ class VacancyPage extends StatefulWidget {
   VacancyPage({Key? key, required this.vacancy, required this.isFavorite}) : super(key: key);
 
   var vacancyRep = VacancyRepository();
+  var messageRep = MessageRepository();
+
   @override
   State<VacancyPage> createState() => _VacancyPageState();
 }
@@ -29,7 +36,7 @@ class _VacancyPageState extends State<VacancyPage>{
 
         color: Colors.black54,
       ) ,
-      actions: [jwtToken.getBool()! ? IconButton(
+      actions: [!jwtToken.getBool()! ? IconButton(
         iconSize: 40,
         splashRadius: 10,
           onPressed:
@@ -64,6 +71,7 @@ class _VacancyPageState extends State<VacancyPage>{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
           children: [
             Container(
               padding: EdgeInsets.only(left: 15, top: 5),
@@ -171,13 +179,55 @@ class _VacancyPageState extends State<VacancyPage>{
                   ),
                   !jwtToken.getBool()!
                       ? BottomButton(widget.vacancy.Vacancy_id)
-                      : BottomButton(2),
+                      : FutureBuilder<List<UserDTO>>(
+                      future: widget.messageRep.getSenders(widget.vacancy.Vacancy_id),
+                      builder: (context,snapshot){
+                         if (snapshot.connectionState == ConnectionState.done){
+                          if(snapshot.hasData){
+                            print('HAS DATA');
+
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            scrollDirection: Axis.vertical,
+
+                            itemBuilder: (context, index) {
+
+
+                                  print(snapshot.data![index].userName);
+                                  return EmployerWidget(snapshot.data![index]);
+
+
+
+
+
+
+                                },
+
+
+
+                            itemCount: snapshot.data!.length ,
+                          );
+                        }else if (snapshot.hasError){
+                            return Container(height: 10000, width:  10000,color: Colors.deepPurpleAccent,);
+                          }else{
+                            return Container(height: 10000, width:  10000,color: Colors.black);
+
+                          }
+    }else{
+
+                           return const Center(
+                             child:  CircularProgressIndicator(),
+                           );
+                         }
+                      }
+                  ),
 
 
                 ],
               ),
             )],
-        ),
+        )
       ),
     );
   }

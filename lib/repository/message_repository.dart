@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:core';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:find_master/extensions/BoolParsing.dart';
 import 'package:find_master/models/message.dart';
+import 'package:find_master/models/user_dto.dart';
 import 'package:find_master/models/user_info.dart';
 import 'package:find_master/models/vacancy.dart';
 import 'package:find_master/shared_preferences/jwt_token.dart';
@@ -31,12 +33,22 @@ class MessageRepository{
     Response response = await _dio.post( url + 'Send_Message?FromUserId=$fromUserId&ToUserId=$toUserId&message=$message&VacancyId=$vacancyId');
     return response;
   }
+  Future<List<UserDTO>> getSenders(int vacancyId) async{
+    Response response = await _dio.get(url + 'Get_Chat_List_Employer?ToUserId=${jwtToken.getInt()!}&VacancyId=$vacancyId');
+    print('senders: ' + response.data.toString());
+    return parseUsers(response);
+  }
   List<Message> parseMessage(Response response){
     return (response.data as List).map<Message>((json) => Message.fromJson(json)).toList();
   }
+
+
   List<UserInfo> parseUser(Response response) {
 
 
     return (response.data as List).map<UserInfo>((json) => UserInfo.fromJson(json)).toList();
+  }
+  List<UserDTO> parseUsers(Response response){
+    return (response.data as List).map<UserDTO>((json) => UserDTO.fromJson(json)).toList();
   }
 }

@@ -70,7 +70,11 @@ class VacancyRepository{
   Future<Response> AddVacancy(String name, int salary, String employerName,
       String address, String requirments, String experience, String employmentType,
         String description) async {
-    Response res = await _dio.post(url + 'Add_Vacancy?VacancyName=$name&VacancySalary=$salary&VacancyEmployerName=$employerName&VacancyAddress=$address&VacancyRequirements=$requirments&VacancyExp=$experience&VacancyEmploymentType=$employmentType&VacancyDescription=$description');
+    print('ADD VACANCY');
+    print(jwtToken.getInt()!);
+
+    print('gay' + url + 'Add_Vacancy?VacancyName=$name&VacancySalary=$salary&VacancyEmployerName=$employerName&VacancyAddress=$address&VacancyRequirements=$requirments&VacancyExp=$experience&VacancyEmploymentType=$employmentType&VacancyDescription=$description&Vacancyid=${jwtToken.getInt()!}');
+    Response res = await _dio.post(url + 'Add_Vacancy?VacancyName=$name&VacancySalary=$salary&VacancyEmployerName=$employerName&VacancyAddress=$address&VacancyRequirements=$requirments&VacancyExp=$experience&VacancyEmploymentType=$employmentType&VacancyDescription=$description&UserId=${jwtToken.getInt()!.toString()}');
     return res;
   }
 

@@ -37,7 +37,10 @@ class _VacancyWidgetState extends State<VacancyWidget> {
       padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
       child:
       GestureDetector(
-        onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => VacancyPage(vacancy: widget.vacancy,
+        onTap: (){
+          print( 'yesss'+widget.vacancy.Vacancy_id.toString());
+
+          Navigator.push(context, MaterialPageRoute(builder: (context) => VacancyPage(vacancy: widget.vacancy,
             isFavorite: widget._is_favourite ))); },
         child:
       Container(
