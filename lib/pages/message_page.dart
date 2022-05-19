@@ -7,7 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class MessagePage extends StatefulWidget {
-  const MessagePage({Key? key}) : super(key: key);
+  final int employerId;
+  const MessagePage(this.employerId ,{Key? key}) : super(key: key);
 
   @override
   State<MessagePage> createState() => _MessagePageState();

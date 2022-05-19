@@ -101,7 +101,7 @@ class _LoginPageState extends State<LoginPage>{
                                   ),
                                   onPressed: () async{
                                     widget.auth.Login(emailController.text.toLowerCase(), passwordController.text).then((res){
-                                      if (res.statusCode == 200){
+                                      if (res.statusCode != 400){
                                         widget.auth.GetId(jwtToken.getString()!).then((value) {
                                           jwtToken.setInt(value);
 
@@ -112,7 +112,8 @@ class _LoginPageState extends State<LoginPage>{
 
 
 
-                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => NavigationPage()));
+                                        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => NavigationPage()),
+                                        ModalRoute.withName('/'));
                                       }
                                     });
 

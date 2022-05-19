@@ -2,8 +2,11 @@
 
 
 import 'package:find_master/models/vacancy.dart';
+import 'package:find_master/pages/widgets/bottom_button.dart';
+import 'package:find_master/repository/vacancy_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:find_master/shared_preferences/jwt_token.dart';
 
 class VacancyPage extends StatefulWidget {
   final Vacancy vacancy;
@@ -11,7 +14,7 @@ class VacancyPage extends StatefulWidget {
   bool isEmployer = false;
   VacancyPage({Key? key, required this.vacancy, required this.isFavorite}) : super(key: key);
 
-
+  var vacancyRep = VacancyRepository();
   @override
   State<VacancyPage> createState() => _VacancyPageState();
 }
@@ -31,6 +34,13 @@ class _VacancyPageState extends State<VacancyPage>{
         splashRadius: 10,
           onPressed:
           () {
+            if(!widget.isFavorite) {
+              widget.vacancyRep.addFavorite(
+                  jwtToken.getInt()!, widget.vacancy.Vacancy_id);
+            }else{
+              widget.vacancyRep.deleteFavorite(
+                  jwtToken.getInt()!, widget.vacancy.Vacancy_id);
+            }
         setState(() {
           widget.isFavorite == true
               ? widget.isFavorite = false
@@ -157,7 +167,11 @@ class _VacancyPageState extends State<VacancyPage>{
                             .textTheme
                             .headline4)
                     ),
-                  )
+                  ),
+                  !jwtToken.getBool()!
+                      ? BottomButton(widget.vacancy.Vacancy_id)
+                      : BottomButton(2),
+
 
                 ],
               ),

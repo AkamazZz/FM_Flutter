@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:find_master/models/vacancy.dart';
+import 'package:find_master/pages/widgets/vacancy/create_vacancy.dart';
 import 'package:find_master/pages/widgets/vacancy/vacancy.dart';
 import 'package:find_master/repository/vacancy_repository.dart';
 import 'package:find_master/shared_preferences/jwt_token.dart';
@@ -65,14 +66,7 @@ class VacancyList extends StatefulWidget {
               ), widget.isFavorite[index-widget.minusVacancy]);
 
         }else if (index == 1 && jwtToken.getBool()!){
-          return Container(padding: EdgeInsets.symmetric(vertical: 0),
-
-            child: TextField(
-              obscureText: false,
-              decoration: ThemeHelper().textInputDecoration('Search', 'What do you want to search'),
-            ),
-            decoration: ThemeHelper().inputBoxDecorationShaddow(),
-          );
+          return CreateVacancyWidget();
         }
         else {
 

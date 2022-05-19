@@ -13,6 +13,7 @@ import 'login_page.dart';
 
 class RegistrationPage extends  StatefulWidget{
   AuthRepository auth = AuthRepository();
+  int countTimes = 0;
   @override
   State<StatefulWidget> createState() {
     return _RegistrationPageState();
@@ -115,6 +116,8 @@ class _RegistrationPageState extends State<RegistrationPage>{
                         Container(
                           child: TextFormField(
                             controller: passwordController,
+                            obscureText: true,
+
 
                             decoration: ThemeHelper().textInputDecoration(
                                 "Password*",
@@ -124,8 +127,8 @@ class _RegistrationPageState extends State<RegistrationPage>{
                             keyboardType: TextInputType.visiblePassword,
 
                             validator: (val) {
-                              if(!(val!.isEmpty) && !RegExp(r"^{7}$").hasMatch(val)){
-                                return "Length is too short";
+                              if( val!.isEmpty){
+                                return "Please enter password";
                               }
                               return null;
                             },
@@ -137,12 +140,20 @@ class _RegistrationPageState extends State<RegistrationPage>{
                         Container(
                           child: TextFormField(
                             controller: codeController,
-                            obscureText: true,
                             keyboardType: TextInputType.number,
                             maxLength: 4,
                             decoration: ThemeHelper().textInputDecoration(
-                                "Code*", "Enter your password"),
+                                "Code*", "Enter your code"),
+                          validator: (val){
+                            setState(() {
+                              widget.countTimes++;
+                            });
+                              if (widget.countTimes%2 == 1){
 
+                                return "Code is not verified";
+                              }
+                              return null;
+                          },
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
                         ),
@@ -225,23 +236,31 @@ class _RegistrationPageState extends State<RegistrationPage>{
                               ),
                             ),
 
-                            onPressed: () async {
+                            onPressed: ()  {
 
+                              if(_formKey.currentState!.validate()) {
+                                widget.auth.Register(
+                                    userController.text.toLowerCase(),
+                                    passwordController.text,
+                                    nameController.text, surnameController.text,
+                                    employerCheckboxValue).then((res) {
+                                  if (res.statusCode != 400) {
+                                    AlertDialog(
+                                        title: const Text('You have registered')
+                                    );
 
-                               widget.auth.Register(userController.text.toLowerCase(), passwordController.text, nameController.text, surnameController.text, employerCheckboxValue).then((res) {
-                                 if (res.statusCode == 200) {
-                                   AlertDialog(
-                                       title: const Text('You have registered')
-                                   );
-                                   Navigator.pushReplacement(context,
-                                       MaterialPageRoute(builder: (context) =>
-                                           ProfilePage()));
-                                 }else{
-                                   AlertDialog(
-                                       title: const Text('Something went wrong')
-                                   );
-                                 }
-                               });
+                                  Navigator.pushReplacement(context,
+                                  MaterialPageRoute(builder: (context) =>
+                                  LoginPage()));
+                                  } else {
+
+                                  return AlertDialog(
+                                  title: const Text(
+                                  'User exists or something went wrong')
+                                  );
+                                  }
+                                });
+                              }
 
 
 

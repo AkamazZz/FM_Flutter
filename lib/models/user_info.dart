@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class UserInfo extends Equatable{
 
-
+  final int userId;
   final String userName;
   final String userSurname;
 
@@ -13,10 +13,13 @@ class UserInfo extends Equatable{
   String? skills;
   String? workExp;*/
 
-  const UserInfo( this.userName, this.userSurname);
+  const UserInfo( this.userId,this.userName, this.userSurname);
 
    factory UserInfo.fromJson(Map<String, dynamic> json) {
-     return UserInfo(json['userName'], json['userSurname']);
+     return UserInfo(
+          json['userId']
+           ,json['userName']
+         , json['userSurname']);
    }
 
   @override

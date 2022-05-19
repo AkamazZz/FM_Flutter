@@ -11,21 +11,21 @@ import 'package:http/http.dart' as http;
 
 class AuthRepository{
   final Dio _dio = Dio(dioConfiguration.conf);
-  var url = "${ApiConstants.mainUrl}auth/";
+  var url = "${ApiConstants.mainUrl}Auth/";
 
   Future<Response> Register(String email, String password, String name, String surname, bool isEmployer) async{
 
     print(url + 'register?UserEmail=${email}&UserPassword=${password}&UserName=${name}&UserSurname=${surname}&UserType=${isEmployer.toString()}');
 
     final res = await _dio.post(url + 'register?UserEmail=${email}&UserPassword=${password}&UserName=${name}&UserSurname=${surname}&UserType=${isEmployer.toString()}');
-    if(res.statusCode == 200){
+    if(res.statusCode != 400){
       return res;
     }else{
       throw Exception('Already exists');
     }
   }
   Future<Response> Login (String email, String password) async{
-
+    print(url + 'Login?UserEmail=${email}&UserPassword=${password}');
     final res = await _dio.post(url + 'Login?UserEmail=${email}&UserPassword=${password}');
     if (res.statusCode == 200){
       jwtToken.setString(res.data.toString());

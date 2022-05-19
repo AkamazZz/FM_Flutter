@@ -32,7 +32,8 @@ class _starWidgetState extends State<starWidget> {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [IconButton(onPressed:
+                  children: [IconButton(splashRadius: 10.0,
+                      onPressed:
                       () {
                       if(!widget.isFavorite) {
                         widget.vacancyRep.addFavorite(
