@@ -1,20 +1,30 @@
 
 
+import 'package:find_master/repository/vacancy_repository.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../common/theme_helper.dart';
+import 'PageWithNavigation.dart';
 
 class AddPageVacancy extends StatefulWidget {
-  const AddPageVacancy({Key? key}) : super(key: key);
-
+  AddPageVacancy({Key? key}) : super(key: key);
+  var vacancyRep = VacancyRepository();
   @override
   State<AddPageVacancy> createState() => _AddPageVacancyState();
 }
 
 class _AddPageVacancyState extends State<AddPageVacancy> {
   Key _formKey = GlobalKey<FormState>();
+  var requirmentsController = TextEditingController();
+  var cityController = TextEditingController();
+  var positionController = TextEditingController();
+  var salaryController = TextEditingController();
+  var experienceController = TextEditingController();
+  var employmentTypeController = TextEditingController();
+  var companyNameController = TextEditingController();
+  var descriptionController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,9 +60,11 @@ class _AddPageVacancyState extends State<AddPageVacancy> {
                           key: _formKey,
                           child: Column(
                             children: [
+
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
                                 child: TextField(
+                                  controller: cityController,
                                   decoration: ThemeHelper().textInputDecoration('City', 'Where will be working'),
                                 ),
                                 decoration: ThemeHelper().inputBoxDecorationShaddow(),
@@ -61,7 +73,7 @@ class _AddPageVacancyState extends State<AddPageVacancy> {
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
                                 child: TextField(
-                                  obscureText: false,
+                                  controller: positionController,
                                   decoration: ThemeHelper().textInputDecoration('Position', 'Position for candidate'),
                                 ),
                                 decoration: ThemeHelper().inputBoxDecorationShaddow(),
@@ -69,6 +81,15 @@ class _AddPageVacancyState extends State<AddPageVacancy> {
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
                                 child: TextField(
+                                  controller: requirmentsController,
+                                  decoration: ThemeHelper().textInputDecoration('Requirements', 'What do you want from candidate'),
+                                ),
+                                decoration: ThemeHelper().inputBoxDecorationShaddow(),
+                              ),
+                              Container(
+                                padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
+                                child: TextField(
+                                  controller: salaryController,
                                   obscureText: false,
                                   decoration: ThemeHelper().textInputDecoration('Salary', 'Salary for candidate'),
                                 ),
@@ -77,6 +98,7 @@ class _AddPageVacancyState extends State<AddPageVacancy> {
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
                                 child: TextField(
+                                  controller: experienceController,
                                   obscureText: false,
                                   decoration: ThemeHelper().textInputDecoration('Experience', 'in one number'),
                                 ),
@@ -85,6 +107,7 @@ class _AddPageVacancyState extends State<AddPageVacancy> {
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
                                 child: TextField(
+                                  controller: employmentTypeController,
                                   obscureText: false,
                                   decoration: ThemeHelper().textInputDecoration('Employment type', 'Full-time, part-time'),
                                 ),
@@ -93,6 +116,7 @@ class _AddPageVacancyState extends State<AddPageVacancy> {
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
                                 child: TextField(
+                                  controller: companyNameController,
                                   obscureText: false,
                                   decoration: ThemeHelper().textInputDecoration('Company name', ''),
                                 ),
@@ -101,6 +125,7 @@ class _AddPageVacancyState extends State<AddPageVacancy> {
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
                                 child: TextField(
+                                  controller: descriptionController,
 
                                   minLines: 4,
                                   maxLines: null,
@@ -136,7 +161,15 @@ class _AddPageVacancyState extends State<AddPageVacancy> {
                                     padding: EdgeInsets.fromLTRB(40, 10, 40, 10),
                                     child: Text('Add new vacancy'.toUpperCase(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),),
                                   ),
-                                  onPressed: (){
+                                  onPressed: () async {
+                                    widget.vacancyRep.AddVacancy(positionController.text, int.parse(salaryController.text), companyNameController.text, cityController.text,
+                                        requirmentsController.text, experienceController.text, employmentTypeController.text, descriptionController.text).then((value) {
+                                          if(value.statusCode != 400){
+                                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => NavigationPage()),
+                                                ModalRoute.withName('/'));
+                                          }
+                                    });
+
                                     //After successful login we will
                                     // redirect to profile page. Let's create profile page now
                                     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProfilePage()));

@@ -53,7 +53,7 @@ class VacancyList extends StatefulWidget {
       itemBuilder: (context, index) {
 
         if(widget.isMainPage ){
-        if(index > 0 && !jwtToken.getBool()! ){
+        if(index > 0 && !jwtToken.getBool()! || index >1 && jwtToken.getBool()!){
           print(widget.minusVacancy);
           print(widget.isFavorite.length);
           return VacancyWidget(
@@ -68,7 +68,7 @@ class VacancyList extends StatefulWidget {
         }else if (index == 1 && jwtToken.getBool()!){
           return CreateVacancyWidget();
         }
-        else {
+        else{
 
           return Container(padding: EdgeInsets.symmetric(vertical: 0),
 

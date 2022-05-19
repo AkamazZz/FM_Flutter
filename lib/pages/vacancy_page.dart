@@ -29,7 +29,7 @@ class _VacancyPageState extends State<VacancyPage>{
 
         color: Colors.black54,
       ) ,
-      actions: [IconButton(
+      actions: [jwtToken.getBool()! ? IconButton(
         iconSize: 40,
         splashRadius: 10,
           onPressed:
@@ -45,7 +45,7 @@ class _VacancyPageState extends State<VacancyPage>{
           widget.isFavorite == true
               ? widget.isFavorite = false
               : widget.isFavorite = true;
-        });
+        } );
 
       }, icon: Icon(
         Icons.star,
@@ -55,7 +55,8 @@ class _VacancyPageState extends State<VacancyPage>{
             ? Colors.amberAccent
             : Colors.grey,
 
-      ))],
+      ))
+          : Container()],
 
     ),
       body: SingleChildScrollView(
