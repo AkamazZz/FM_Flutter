@@ -24,13 +24,16 @@ class MessageRepository{
     return parseUser(response);
   }
   Future<List<Message>> fetchChat(int fromUserId, int toUserId, int vacancyId) async {
+      print(fromUserId.toString() + ' yes ' + toUserId.toString()  + ' ' + vacancyId.toString());
+    Response response = await _dio.get(url + 'Get_Chat?FromUserId=$fromUserId&ToUserId=$toUserId&VacancyId=$vacancyId');
+    print('era gay fetch chat' + response.statusCode.toString() + response.data.toString());
 
-    Response response = await _dio.get(url + 'Get_Chat?FromUserId=$fromUserId&ToUserId$toUserId=&VacancyId=$vacancyId');
     return parseMessage(response);
   }
 
   Future<Response> sendMessage(String message, int fromUserId, int toUserId, int vacancyId) async{
     Response response = await _dio.post( url + 'Send_Message?FromUserId=$fromUserId&ToUserId=$toUserId&message=$message&VacancyId=$vacancyId');
+    print('era gay status code' + response.statusCode.toString());
     return response;
   }
   Future<List<UserDTO>> getSenders(int vacancyId) async{

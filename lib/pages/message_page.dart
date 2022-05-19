@@ -1,14 +1,21 @@
 
 
 
+import 'package:find_master/models/message.dart';
 import 'package:find_master/pages/widgets/messege/message.dart';
+import 'package:find_master/repository/message_repository.dart';
+import 'package:find_master/shared_preferences/jwt_token.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class MessagePage extends StatefulWidget {
-  final int employerId;
-  const MessagePage(this.employerId ,{Key? key}) : super(key: key);
+  final int receiverId;
+  final int senderId;
+  final int vacancyId;
+  final String name;
+  final messageRep = MessageRepository();
+  MessagePage(this.senderId,this.receiverId , this.vacancyId, this.name , {Key? key}) : super(key: key);
 
   @override
   State<MessagePage> createState() => _MessagePageState();
@@ -19,7 +26,7 @@ class _MessagePageState extends State<MessagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tamerlan', style: GoogleFonts.openSans(fontSize: 30, textStyle: Theme
+        title: Text(widget.name, style: GoogleFonts.openSans(fontSize: 30, textStyle: Theme
             .of(context)
             .textTheme
             .headline6),
@@ -38,11 +45,40 @@ class _MessagePageState extends State<MessagePage> {
 
 
       ),
-      body: getBody(),
+      body: FutureBuilder<List<Message>>(
+    future: widget.messageRep.fetchChat(widget.senderId, widget.receiverId, widget.vacancyId),
+      builder: (context,snapshot){
+    if (snapshot.connectionState == ConnectionState.done) {
+      if (snapshot.hasError) {
+        return const Center(child: Text('An error occurred'),);
+      } else {
+        return ListView.builder(
+          shrinkWrap: true,
+          padding: EdgeInsets.symmetric(vertical: 15),
+          scrollDirection: Axis.vertical,
+
+          itemBuilder: (context, index) {
+            return MessagePod(
+                isMe:  jwtToken.getInt()! == snapshot.data![index].toUserId ? false : true
+            , message: snapshot.data![index].message);
+          },
+          itemCount: snapshot.data!.length,
+        );
+      }
+    }
+    else{
+    return const Center(
+    child:  CircularProgressIndicator(),
+    );
+    }
+
+    }),
       bottomSheet: getBottom(),
     );
+
   }
   Widget getBottom(){
+    var messageController = TextEditingController();
     return Container(
       height: MediaQuery.of(context).size.height/12,
       width: double.infinity,
@@ -70,6 +106,7 @@ class _MessagePageState extends State<MessagePage> {
                     child: Padding(
                       padding: const EdgeInsets.only(left: 12),
                       child: TextField(
+                        controller: messageController,
                         cursorColor: Colors.black,
 
                         decoration: InputDecoration(
@@ -81,7 +118,20 @@ class _MessagePageState extends State<MessagePage> {
                     ),
                   ),
                   SizedBox(width: 15,),
-                  Icon(Icons.send,size: 35,color: HexColor('#5325E8'),),
+                  IconButton(icon: Icon(Icons.send,size: 35,color: HexColor('#5325E8'),),
+                  onPressed: () async {
+                      widget.messageRep.sendMessage(messageController.text, widget.senderId, widget.receiverId,
+                      widget.vacancyId).then((value) {
+                        if(value.statusCode != 400 || value.statusCode != 500){
+                          print('Era gay');
+    }
+                        setState(() {
+                          messageController.clear();
+
+                        });
+
+                      });
+                  },),
                 ],
               ),
             ),
@@ -94,15 +144,7 @@ class _MessagePageState extends State<MessagePage> {
     );
   }
 
-  Widget getBody() {
 
-    return ListView(
-      padding: EdgeInsets.only(right: 20,left: 20,top: 20,bottom: 80),
-      children: List.generate(1, (index){
-        return Message(isMe: true,message: "DFGFJOGFDGNDFJGDFNGFDJGNFDGKJDFNGDFJKGD DFNG GJNGDFKJGNDFGDFNGDFGJDFN");
-      }),
-    );
-  }
 }
 
 

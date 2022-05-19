@@ -42,6 +42,10 @@ class VacancyRepository{
       throw Exception('Wrong format');
     }
   }
+  Future<int> getEmployeeId(int vacancyId) async {
+    final res = await _dio.get(url + 'Get_Employer_Id?VacancyId=$vacancyId');
+    return int.parse(res.data.toString());
+  }
 
   Future<bool> isApplication(int userId, int vacancyId) async{
     Response res = await _dio.get(url + 'Is_Application?UserId=${userId}&VacancyId=${vacancyId}');

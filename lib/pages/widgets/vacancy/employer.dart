@@ -3,6 +3,7 @@
 
 import 'package:find_master/models/user_info.dart';
 import 'package:find_master/pages/message_page.dart';
+import 'package:find_master/shared_preferences/jwt_token.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,7 +12,8 @@ import '../../../models/user_dto.dart';
 class EmployerWidget extends StatelessWidget {
 
   final UserDTO user;
-  const EmployerWidget( this.user, {Key? key}) : super(key: key);
+  final int vacancyId;
+  const EmployerWidget( this.user, this.vacancyId, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +24,8 @@ class EmployerWidget extends StatelessWidget {
       GestureDetector(
         onTap: (){
 
-          Navigator.push(context, MaterialPageRoute(builder: (context) => MessagePage(1,
-            ))); },
+          Navigator.push(context, MaterialPageRoute(builder: (context) => MessagePage(jwtToken.getInt()!,user.userId, vacancyId
+            , user.userName))); },
         child:
         Container(
 
@@ -81,7 +83,7 @@ class EmployerWidget extends StatelessWidget {
         ),
 
       ),);
-    return Container(
+ /*   return Container(
 
       color: Colors.white60,
 
@@ -100,6 +102,6 @@ class EmployerWidget extends StatelessWidget {
         ),
 
     )
-    );
+    );*/
   }
 }

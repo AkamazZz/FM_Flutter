@@ -178,7 +178,7 @@ class _VacancyPageState extends State<VacancyPage>{
                     ),
                   ),
                   !jwtToken.getBool()!
-                      ? BottomButton(widget.vacancy.Vacancy_id)
+                      ?  BottomButton(widget.vacancy.Vacancy_id)
                       : FutureBuilder<List<UserDTO>>(
                       future: widget.messageRep.getSenders(widget.vacancy.Vacancy_id),
                       builder: (context,snapshot){
@@ -195,7 +195,7 @@ class _VacancyPageState extends State<VacancyPage>{
 
 
                                   print(snapshot.data![index].userName);
-                                  return EmployerWidget(snapshot.data![index]);
+                                  return EmployerWidget(snapshot.data![index], widget.vacancy.Vacancy_id);
 
 
 

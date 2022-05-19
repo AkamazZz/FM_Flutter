@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class Message extends StatelessWidget {
+class MessagePod extends StatelessWidget {
   final bool isMe;
 
   final String message;
 
 
-  const Message({
+  const MessagePod({
     Key? key, required this.isMe, required this.message,
   }) : super(key: key);
 
@@ -15,6 +15,7 @@ class Message extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isMe) {
       return Padding(
+
         padding: const EdgeInsets.all(1),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -22,7 +23,9 @@ class Message extends StatelessWidget {
           children: <Widget>[
             Flexible(
               child: Container(
+
                 constraints: BoxConstraints(
+                  minWidth: 70,
 
           maxWidth: MediaQuery.of(context).size.width/1.25,
         ),

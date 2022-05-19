@@ -1,12 +1,15 @@
 
 
+import 'package:find_master/repository/vacancy_repository.dart';
+import 'package:find_master/shared_preferences/jwt_token.dart';
 import 'package:flutter/material.dart';
 
 import '../message_page.dart';
 
 class BottomButton extends StatelessWidget {
   final int vacancyId;
-  const BottomButton(this.vacancyId,{Key? key}) : super(key: key);
+  final rep = VacancyRepository();
+  BottomButton(this.vacancyId , {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,9 @@ class BottomButton extends StatelessWidget {
           textColor: Colors.white,
           minWidth: 300,
           onPressed: () => {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const MessagePage(1)))
+            rep.getEmployeeId(vacancyId).then((value) =>  Navigator.push(context, MaterialPageRoute(builder: (context) => MessagePage(jwtToken.getInt()!,
+                value, vacancyId, 'SapaSoft' ))))
+
           },
           child: const Text('Write'),
         ),
